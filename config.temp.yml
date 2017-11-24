@@ -1,0 +1,17 @@
+SlackToken: {need}
+BotID: "{need}"
+BotName: "{need}"
+BotIconURL: "http://icons.iconarchive.com/icons/artua/star-wars/128/R2D2-icon.png"
+BotQA:
+  hello: "Hello"
+  howareyou: "I'm fine and you?"
+  help: "Hi! I'm here to help. To get version environment try asking  <name env> version "
+JenkinsURL: ""
+JenkinsPass: ""
+JenkinsUser: ""
+EnvGit:
+  qaversion: "qa"
+    
+qa:
+  VersionURL: ""
+  EnvURLs: ""
