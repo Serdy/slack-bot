@@ -56,7 +56,6 @@ Loop:
 			case *slack.ConnectedEvent:
 				fmt.Println("Infos:", ev.Info)
 				fmt.Println("Connection counter:", ev.ConnectionCount)
-				BotID = ev.Info.User.ID
 				// Replace #general with your Channel ID
 				rtm.SendMessage(rtm.NewOutgoingMessage("SSHello world", "#general"))
 			case *slack.MessageEvent:
