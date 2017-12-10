@@ -9,11 +9,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-func BotMsg(NameUser string, MsgQuestion string) {
+func BotMsg(NameUser string, MsgQuestion string, Channel string) {
 	BotMassege := viper.GetString("BotQA." + MsgQuestion)
-	SendMassage(NameUser, BotMassege)
+	SendMassage(NameUser, BotMassege, Channel)
 }
-func SendMassage(name string, MsgQuestion string) {
+func SendMassage(name string, MsgQuestion string, Channel string) {
 	SlackToken := viper.GetString("SlackToken")
 	BotName := viper.GetString("BotName")
 	BotIconURL := viper.GetString("BotIconURL")
@@ -24,10 +24,10 @@ func SendMassage(name string, MsgQuestion string) {
 	params.IconURL = BotIconURL
 	fmt.Println(MsgQuestion)
 	// time.Sleep(30 * time.Second)
-	api.PostMessage("epam", "<@"+name+">: "+MsgQuestion, params)
+	api.PostMessage(Channel, "<@"+name+">: "+MsgQuestion, params)
 
 }
-func SendMassageEnvGit(name string, MsgQuestion *EnvGitMap) {
+func SendMassageEnvGit(name string, MsgQuestion *EnvGitMap, Channel string) {
 	SlackToken := viper.GetString("SlackToken")
 	BotName := viper.GetString("BotName")
 	BotIconURL := viper.GetString("BotIconURL")
@@ -45,7 +45,7 @@ func SendMassageEnvGit(name string, MsgQuestion *EnvGitMap) {
 	}
 
 	params.Attachments = []slack.Attachment{attachment}
-	api.PostMessage("epam", "<@"+name+">: ", params)
+	api.PostMessage(Channel, "<@"+name+">: ", params)
 }
 func SendMassageJenkinsStatus(name string, MsgQuestion *JenkinsAnswerMap) {
 	SlackToken := viper.GetString("SlackToken")
@@ -64,22 +64,6 @@ func SendMassageJenkinsStatus(name string, MsgQuestion *JenkinsAnswerMap) {
 		Value: "Value",
 	}
 
-	// testcall {
-	// 	Actions:    []slack.AttachmentAction{test},
-	// 	CallbackID: "wopr_game",
-	// 	Team       Team               `json:"team"`
-	// 	Channel    Channel            `json:"channel"`
-	// 	User       User               `json:"user"`
-	//
-	// 	OriginalMessage Message `json:"original_message"`
-	//
-	// 	ActionTs     string `json:"action_ts"`
-	// 	MessageTs    string `json:"message_ts"`
-	// 	AttachmentID string `json:"attachment_id"`
-	// 	Token        string `json:"token"`
-	// 	ResponseURL  string `json:"response_url"`
-	// }
-
 	attachment := slack.Attachment{
 		Pretext:    MsgQuestion.JobName,
 		Text:       "GitTag: " + MsgQuestion.GitTag + "\nGit " + MsgQuestion.GitCommit + "\nTime build: " + MsgQuestion.TimeBuild,
@@ -95,16 +79,15 @@ func SendMassageJenkinsStatus(name string, MsgQuestion *JenkinsAnswerMap) {
 	api.PostMessage("epam", "<@"+name+">: ", params)
 }
 
-func SendMassageHelp(name string) {
+func SendMassageHelp(name string, Channel string) {
 	SlackToken := viper.GetString("SlackToken")
 	BotName := viper.GetString("BotName")
 	BotIconURL := viper.GetString("BotIconURL")
-
 	api := slack.New(SlackToken)
 	fmt.Println(reflect.TypeOf(api))
 	params := slack.PostMessageParameters{}
 	params.Username = BotName
 	params.IconURL = BotIconURL
-	api.PostMessage("epam", "I'm sorry <@"+name+">, I don't understand that. Try asking: <@"+strings.ToLower(BotName)+"> help", params)
+	api.PostMessage(Channel, "I'm sorry <@"+name+">, I don't understand that. Try asking: <@"+strings.ToLower(BotName)+"> help", params)
 
 }

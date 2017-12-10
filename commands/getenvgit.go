@@ -38,7 +38,7 @@ func getJson(url string, target interface{}) error {
 }
 
 // Get git version from env
-func GetEnvGit(NameUser string, JenkinsJobName string) {
+func GetEnvGit(NameUser string, JenkinsJobName string, Channel string) {
 	EnvName := viper.GetString("EnvGit." + JenkinsJobName)
 	EnvVersionURL := viper.GetString(EnvName + ".VersionURL")
 	EnvURLs := viper.GetString(EnvName + ".EnvURLs")
@@ -51,5 +51,5 @@ func GetEnvGit(NameUser string, JenkinsJobName string) {
 	ResponseEnvGitMap.GitTag = HybrisVersionResponseJSON.Git.Describe
 	ResponseEnvGitMap.GitCommit = HybrisVersionResponseJSON.Git.Commit
 
-	SendMassageEnvGit(NameUser, ResponseEnvGitMap)
+	SendMassageEnvGit(NameUser, ResponseEnvGitMap, Channel)
 }

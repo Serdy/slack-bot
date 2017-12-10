@@ -54,13 +54,13 @@ func CatchMessForBot(SlackEvent *slack.MessageEvent) {
 	switch {
 
 	case CheckMessageTalks(SlackMessage):
-		BotMsg(SlackEvent.Msg.User, SlackMessage)
+		BotMsg(SlackEvent.Msg.User, SlackMessage, SlackEvent.Msg.Channel)
 		// SendMassage(SlackEvent.Msg.User, SlackMessage)
 	// case strings.Contains(strings.ToLower(SlackEvent.Msg.Text), "latest qa"):
 	case CheckMessageEnvGit(SlackMessage):
-		GetEnvGit(SlackEvent.Msg.User, SlackMessage)
+		GetEnvGit(SlackEvent.Msg.User, SlackMessage, SlackEvent.Msg.Channel)
 
 	default:
-		SendMassageHelp(SlackEvent.Msg.User)
+		SendMassageHelp(SlackEvent.Msg.User, SlackEvent.Msg.Channel)
 	}
 }

@@ -61,7 +61,7 @@ Loop:
 			case *slack.MessageEvent:
 				callerID := ev.Msg.User
 				if ev.Msg.Type == "message" && callerID != BotID && ev.Msg.SubType != "message_deleted" &&
-					(strings.Contains(ev.Msg.Text, "<@"+BotID+">") || strings.HasPrefix(ev.Msg.Channel, "D")) {
+					strings.Contains(ev.Msg.Text, "<@"+BotID+">") {
 					commands.CatchMessForBot(ev)
 				}
 				// ############################################
