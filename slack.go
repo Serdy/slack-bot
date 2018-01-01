@@ -60,7 +60,7 @@ Loop:
 				rtm.SendMessage(rtm.NewOutgoingMessage("SSHello world", "#general"))
 			case *slack.MessageEvent:
 				callerID := ev.Msg.User
-				if ev.Msg.Type == "message" && callerID != BotID && ev.Msg.SubType != "message_deleted" &&
+				if ev.Msg.Type == "message" && callerID != BotID && callerID != "" && ev.Msg.SubType != "message_deleted" &&
 					strings.Contains(ev.Msg.Text, "<@"+BotID+">") {
 					commands.CatchMessForBot(ev)
 				}
