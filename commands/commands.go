@@ -45,6 +45,16 @@ func CheckMessageEnvGit(message string) bool {
 	return false
 }
 
+func CheckMessageInstAWS(message string) bool {
+	message = strings.ToLower(message)
+	answer := viper.GetStringMap("EnvAWS")
+	if val, ok := answer[message]; ok {
+		fmt.Println(val)
+		return true
+	}
+	return false
+}
+
 /*
 Func catch messege for bot and try undesten what it must do
 */
@@ -59,6 +69,10 @@ func CatchMessForBot(SlackEvent *slack.MessageEvent) {
 	// case strings.Contains(strings.ToLower(SlackEvent.Msg.Text), "latest qa"):
 	case CheckMessageEnvGit(SlackMessage):
 		GetEnvGit(SlackEvent.Msg.User, SlackMessage, SlackEvent.Msg.Channel)
+	
+	case CheckMessageInstAWS(SlackMessage):
+		AWSIntsansesFilter(SlackEvent.Msg.User, SlackMessage, SlackEvent.Msg.Channel)
+
 
 	default:
 		SendMassageHelp(SlackEvent.Msg.User, SlackEvent.Msg.Channel)

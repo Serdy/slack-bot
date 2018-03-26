@@ -47,6 +47,27 @@ func SendMassageEnvGit(name string, MsgQuestion *EnvGitMap, Channel string) {
 	params.Attachments = []slack.Attachment{attachment}
 	api.PostMessage(Channel, "<@"+name+">: ", params)
 }
+func SendMassageAWSEnv(name string, AWSInst *AWSInstancesDataSlice, Channel string) {
+	SlackToken := viper.GetString("SlackToken")
+	BotName := viper.GetString("BotName")
+	BotIconURL := viper.GetString("BotIconURL")
+	params := slack.PostMessageParameters{}
+	api := slack.New(SlackToken)
+	fmt.Println(reflect.TypeOf(api))
+	params.Username = BotName
+	params.IconURL = BotIconURL
+	fmt.Println(AWSInst)
+	for _, instance := range AWSInst.Instances {
+		attachment := slack.Attachment{
+			Text:      "Name_Instance: " + instance.TagName + "\n DNS_Instance: " + instance.DNSName,
+		}
+		params.Attachments = []slack.Attachment{attachment}
+		api.PostMessage(Channel, "<@"+name+">: ", params)
+}
+	}
+	
+
+	
 func SendMassageJenkinsStatus(name string, MsgQuestion *JenkinsAnswerMap) {
 	SlackToken := viper.GetString("SlackToken")
 	BotName := viper.GetString("BotName")
